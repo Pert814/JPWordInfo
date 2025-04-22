@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">JP Word Info</string>
+    <string name="japanese_word_search">日文單字查詢</string>
+    <string name="enter_japanese_word">請輸入日文單字</string>
+    <string name="search">查詢</string>
+    <string name="search_result_message">查詢結果將顯示在這裡</string>
+    <string name="word_result_template">
+        單字: %1$s\n
+        讀音: %2$s\n
+        アクセント: %3$s\n
+        品詞: %4$s\n
+        意味: %5$s\n
+        例文: %6$s
+    </string>
+    <string name="empty_result">查詢結果為空</string>
+    <string name="query_failed">查詢失敗: %d</string>
+    <string name="network_error">網路錯誤: %s</string>
+    <string name="show_history">歷史紀錄</string>
+    <string name="search_history_title">最近搜尋紀錄</string>
+    <string name="no_history">無搜尋紀錄</string>
+</resources>

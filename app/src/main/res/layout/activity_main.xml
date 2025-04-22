@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- 標題 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/japanese_word_search"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 輸入欄位 -->
+    <EditText
+        android:id="@+id/etWordInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="@string/enter_japanese_word"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
+
+    <!-- 查詢按鈕 -->
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="115dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:text="@string/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etWordInput" />
+
+    <!-- 結果顯示 -->
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="360dp"
+        android:layout_height="389dp"
+        android:layout_marginTop="16dp"
+        android:background="#EEEEEE"
+        android:padding="12dp"
+        android:text="@string/search_result_message"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSearch"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <!-- 歷史紀錄按鈕 -->
+    <Button
+        android:id="@+id/btnHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="568dp"
+        android:layout_marginEnd="128dp"
+        android:text="@string/show_history"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etWordInput" />
+</androidx.constraintlayout.widget.ConstraintLayout>
