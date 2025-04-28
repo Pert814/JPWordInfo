@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-    <!-- 標題 -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- 輸入欄位 -->
     <EditText
         android:id="@+id/etWordInput"
         android:layout_width="0dp"
@@ -31,7 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
-    <!-- 查詢按鈕 -->
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="115dp"
@@ -43,7 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etWordInput" />
 
-    <!-- 結果顯示 -->
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="360dp"
@@ -61,13 +57,37 @@
         app:layout_constraintTop_toBottomOf="@id/btnSearch"
         app:layout_constraintVertical_bias="0.224" />
 
-    <!-- 歷史紀錄按鈕 -->
+    <Button
+        android:id="@+id/btnAddToNotebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/add_to_notebook"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnOpenNotebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/open_notebook"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/btnHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="564dp"
-        android:layout_marginEnd="132dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/show_history"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

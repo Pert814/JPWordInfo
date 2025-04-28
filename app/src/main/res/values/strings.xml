@@ -18,4 +18,9 @@
     <string name="show_history">歷史紀錄</string>
     <string name="search_history_title">最近搜尋紀錄</string>
     <string name="no_history">無搜尋紀錄</string>
+    <string name="add_to_notebook">加入單字本</string>
+    <string name="open_notebook">單字本</string>
+    <string name="notebook_title">我的單字本</string>
+    <string name="no_words">無單字</string>
+    <string name="word_added">已加入單字本</string>
 </resources>
