@@ -11,12 +11,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.app.AlertDialog
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
     private lateinit var etWordInput: EditText
     private lateinit var btnSearch: Button
     private lateinit var tvResult: TextView
     private lateinit var btnHistory: Button
+    private lateinit var loadingView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         btnSearch = findViewById(R.id.btnSearch)
         tvResult = findViewById(R.id.tvResult)
         btnHistory = findViewById(R.id.btnHistory)
+        loadingView = findViewById(R.id.loadingView)
 
         // 設定查詢按鈕點擊事件
         btnSearch.setOnClickListener {
@@ -45,6 +48,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchWord(word: String) {
+        // 顯示載入狀態
+        loadingView.visibility = View.VISIBLE
+        // 清空
+        tvResult.text = ""
         // 儲存搜尋歷史
         saveSearchHistory(word)
 
@@ -52,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         apiService.searchWord(word).enqueue(object : Callback<WordResponse> {
             override fun onResponse(call: Call<WordResponse>, response: Response<WordResponse>) {
                 if (response.isSuccessful) {
+                    // 隱藏載入狀態
+                    loadingView.visibility = View.GONE
                     val wordData = response.body()
                     wordData?.let {
                         tvResult.text = getString(
@@ -72,6 +81,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<WordResponse>, t: Throwable) {
+                // 隱藏載入狀態
+                loadingView.visibility = View.GONE
                 tvResult.text = getString(R.string.network_error, t.message)}
         })
     }

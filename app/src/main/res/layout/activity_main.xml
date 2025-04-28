@@ -66,10 +66,20 @@
         android:id="@+id/btnHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="568dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginTop="564dp"
+        android:layout_marginEnd="132dp"
         android:text="@string/show_history"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etWordInput" />
+
+    <ProgressBar
+        android:id="@+id/loadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvResult"
+        app:layout_constraintEnd_toEndOf="@id/tvResult"
+        app:layout_constraintStart_toStartOf="@id/tvResult"
+        app:layout_constraintTop_toTopOf="@id/tvResult" />
 </androidx.constraintlayout.widget.ConstraintLayout>
