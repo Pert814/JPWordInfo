@@ -61,4 +61,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
 }
