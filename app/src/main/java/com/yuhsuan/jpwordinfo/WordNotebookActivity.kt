@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class WordNotebookActivity : AppCompatActivity() {
     private lateinit var tvNotebookTitle: TextView
     private lateinit var rvWordList: RecyclerView
+    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +32,15 @@ class WordNotebookActivity : AppCompatActivity() {
 
     private fun loadWordsFromNotebook(): List<WordResponse> {
         val prefs = getSharedPreferences("WordNotebook", MODE_PRIVATE)
-        val notebookString = prefs.getString("notebook", "") ?: ""
-        return if (notebookString.isNotEmpty()) {
-            notebookString.split("|").mapNotNull { wordString ->
-                val parts = wordString.split("|")
-                if (parts.size == 6) {
-                    WordResponse(
-                        word = parts[0],
-                        reading = parts[1],
-                        accent = parts[2],
-                        partOfSpeech = parts[3],
-                        meaning = parts[4],
-                        example = parts[5]
-                    )
-                } else {
-                    null
-                }
-            }
+        val notebookJson = prefs.getString("notebook", null)
+        android.util.Log.d("WordNotebookActivity", "Loaded notebookJson: $notebookJson")
+        return if (notebookJson != null) {
+            val type = object : TypeToken<List<WordResponse>>() {}.type
+            val words: List<WordResponse> = gson.fromJson(notebookJson, type) ?: emptyList()
+            android.util.Log.d("WordNotebookActivity", "Parsed words: $words")
+            words
         } else {
+            android.util.Log.d("WordNotebookActivity", "Notebook is empty")
             emptyList()
         }
     }

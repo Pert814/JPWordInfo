@@ -13,6 +13,8 @@ import retrofit2.Response
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
     private lateinit var etWordInput: EditText
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnHistory: Button
     private lateinit var loadingView: View
     private var currentWordData: WordResponse? = null
+    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,19 +180,28 @@ class MainActivity : AppCompatActivity() {
     private fun saveWordToNotebook(wordData: WordResponse) {
         val prefs = getSharedPreferences("WordNotebook", MODE_PRIVATE)
         val editor = prefs.edit()
-        val notebookString = prefs.getString("notebook", "") ?: ""
-        val notebookList = if (notebookString.isNotEmpty()) {
-            notebookString.split("|").toMutableList()
+        val notebookJson = prefs.getString("notebook", null)
+        val notebookList: MutableList<WordResponse> = if (notebookJson != null) {
+            val type = object : TypeToken<MutableList<WordResponse>>() {}.type
+            gson.fromJson(notebookJson, type) ?: mutableListOf()
         } else {
             mutableListOf()
         }
-        val wordString = "${wordData.word}|${wordData.reading}|${wordData.accent}|${wordData.partOfSpeech}|${wordData.meaning}|${wordData.example}"
-        if (!notebookList.contains(wordString)) {
-            notebookList.add(wordString)
-            val updatedNotebookString = notebookList.joinToString("|")
-            editor.putString("notebook", updatedNotebookString)
-            editor.apply()
-            tvResult.text = getString(R.string.word_added)
+        // 檢查是否已存在（比較 word 字段）
+        if (notebookList.none { it.word == wordData.word }) {
+            notebookList.add(wordData)
+            // 將列表轉為 JSON 並儲存
+            val updatedNotebookJson = gson.toJson(notebookList)
+            android.util.Log.d("MainActivity", "Saving notebookJson: $updatedNotebookJson")
+            editor.putString("notebook", updatedNotebookJson)
+            val success = editor.commit()
+            if (success) {
+                android.util.Log.d("MainActivity", "Save successful")
+                tvResult.text = getString(R.string.word_added)
+            } else {
+                android.util.Log.d("MainActivity", "Save failed")
+                tvResult.text = "儲存失敗"
+            }
         } else {
             tvResult.text = "單字已存在於單字本"
         }
