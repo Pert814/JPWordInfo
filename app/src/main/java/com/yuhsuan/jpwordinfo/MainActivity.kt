@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_notebook -> {
-                    startActivity(Intent(this, WordNotebookActivity::class.java))
+                    startActivity(Intent(this, NotebookDirectoryActivity::class.java))
                     true
                 }
                 else -> false
@@ -81,8 +81,12 @@ class MainActivity : AppCompatActivity() {
 
         // 設定加入單字本按鈕點擊事件
         btnAddToNotebook.setOnClickListener {
+            android.util.Log.d("MainActivity", "Add to notebook button clicked, currentWordData: $currentWordData")
             currentWordData?.let { wordData ->
-                saveWordToNotebook(wordData)
+                showSelectNotebookDialog(wordData)
+            } ?: run {
+                android.util.Log.d("MainActivity", "currentWordData is null")
+                tvResult.text = "無法加入單字本：查詢結果無效"
             }
         }
 
@@ -199,35 +203,50 @@ class MainActivity : AppCompatActivity() {
         dialog.setView(listView)
         dialog.show()
     }
+    // 選擇單字本
+    private fun showSelectNotebookDialog(wordData: WordResponse) {
+        val notebooks = loadNotebooks(this)
+        if (notebooks.isEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("請先在單字本目錄中新增單字本")
+                .setPositiveButton("確認") { _, _ ->
+                    startActivity(Intent(this, NotebookDirectoryActivity::class.java))
+                }
+                .setNegativeButton("取消", null)
+                .show()
+            return
+        }
+
+        val names = notebooks.map { it.name }
+        AlertDialog.Builder(this)
+            .setTitle("選擇單字本")
+            .setItems(names.toTypedArray()) { _, which ->
+                val selectedNotebook = notebooks[which]
+                saveWordToNotebook(wordData, selectedNotebook.name)
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
 
     // 加入單字本
-    private fun saveWordToNotebook(wordData: WordResponse) {
-        val prefs = getSharedPreferences("WordNotebook", MODE_PRIVATE)
-        val editor = prefs.edit()
-        val notebookJson = prefs.getString("notebook", null)
+    private fun saveWordToNotebook(wordData: WordResponse, notebookName: String) {
+        val prefs = getSharedPreferences("NotebookPrefs", MODE_PRIVATE)
+        val notebookKey = "notebook_$notebookName"
+        val notebookJson = prefs.getString(notebookKey, null)
         val notebookList: MutableList<WordResponse> = if (notebookJson != null) {
             val type = object : TypeToken<MutableList<WordResponse>>() {}.type
             gson.fromJson(notebookJson, type) ?: mutableListOf()
         } else {
             mutableListOf()
         }
-        // 檢查是否已存在（比較 word 字段）
         if (notebookList.none { it.word == wordData.word }) {
             notebookList.add(wordData)
-            // 將列表轉為 JSON 並儲存
             val updatedNotebookJson = gson.toJson(notebookList)
-            android.util.Log.d("MainActivity", "Saving notebookJson: $updatedNotebookJson")
-            editor.putString("notebook", updatedNotebookJson)
-            val success = editor.commit()
-            if (success) {
-                android.util.Log.d("MainActivity", "Save successful")
-                tvResult.text = getString(R.string.word_added)
-            } else {
-                android.util.Log.d("MainActivity", "Save failed")
-                tvResult.text = "儲存失敗"
-            }
+            prefs.edit().putString(notebookKey, updatedNotebookJson).apply()
+            tvResult.text = getString(R.string.word_added)
         } else {
-            tvResult.text = "單字已存在於單字本"
+            tvResult.text = "單字已存在於此單字本"
         }
     }
 }

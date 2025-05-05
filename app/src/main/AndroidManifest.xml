@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WordNotebookActivity" />
+        <activity android:name=".NotebookDirectoryActivity" />
     </application>
 
 </manifest>
