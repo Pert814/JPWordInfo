@@ -24,4 +24,7 @@
     <string name="notebook_title">我的單字本</string>
     <string name="no_words">無單字</string>
     <string name="word_added">已加入單字本</string>
+    <string name="notebook_directory_title">單字本目錄</string>
+    <string name="add_notebook">新增筆記本</string>
+    <string name="more_options">更多選項</string>
 </resources>
