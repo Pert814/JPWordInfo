@@ -14,7 +14,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnHistory: Button
     private lateinit var loadingView: View
     private var currentWordData: WordResponse? = null
-    private val gson = Gson()
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -223,30 +221,28 @@ class MainActivity : AppCompatActivity() {
             .setTitle("選擇單字本")
             .setItems(names.toTypedArray()) { _, which ->
                 val selectedNotebook = notebooks[which]
-                saveWordToNotebook(wordData, selectedNotebook.name)
+                saveWordToNotebook(wordData, selectedNotebook)
             }
             .setNegativeButton("取消", null)
             .show()
     }
 
     // 加入單字本
-    private fun saveWordToNotebook(wordData: WordResponse, notebookName: String) {
-        val prefs = getSharedPreferences("NotebookPrefs", MODE_PRIVATE)
-        val notebookKey = "notebook_$notebookName"
-        val notebookJson = prefs.getString(notebookKey, null)
-        val notebookList: MutableList<WordResponse> = if (notebookJson != null) {
-            val type = object : TypeToken<MutableList<WordResponse>>() {}.type
-            gson.fromJson(notebookJson, type) ?: mutableListOf()
-        } else {
-            mutableListOf()
-        }
-        if (notebookList.none { it.word == wordData.word }) {
-            notebookList.add(wordData)
-            val updatedNotebookJson = gson.toJson(notebookList)
-            prefs.edit().putString(notebookKey, updatedNotebookJson).apply()
+    private fun saveWordToNotebook(wordData: WordResponse, notebook: Notebook) {
+        val notebooks = loadNotebooks(this).toMutableList()
+        val index = notebooks.indexOfFirst { it.name == notebook.name }
+        if (index != -1) {
+            val updatedNotebook = notebook.copy(words = notebook.words + wordData)
+            notebooks[index] = updatedNotebook
+            val prefs = getSharedPreferences("NotebookPrefs", MODE_PRIVATE)
+            val editor = prefs.edit()
+            val gson = Gson()
+            val notebookJson = gson.toJson(notebooks)
+            editor.putString("notebook_directory", notebookJson)
+            editor.apply()
             tvResult.text = getString(R.string.word_added)
         } else {
-            tvResult.text = "單字已存在於此單字本"
+            tvResult.text = "單字本未找到"
         }
     }
 }

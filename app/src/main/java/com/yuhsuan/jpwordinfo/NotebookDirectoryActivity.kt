@@ -155,6 +155,16 @@ class NotebookAdapter(
     override fun onBindViewHolder(holder: NotebookViewHolder, position: Int) {
         val notebook = notebooks[position]
         holder.tvNotebookName.text = notebook.name
+        holder.tvNotebookName.isClickable = true
+
+        // 點擊單字本名稱，跳轉到 WordNotebookActivity
+        holder.tvNotebookName.setOnClickListener {
+            val intent = Intent(holder.itemView.context, WordNotebookActivity::class.java)
+            intent.putExtra("notebookName", notebook.name)
+            holder.itemView.context.startActivity(intent)
+        }
+
+        // 點擊動作按鈕，顯示編輯/刪除選項
         holder.btnActions.setOnClickListener {
             onActionClick(notebook)
         }

@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".WordNotebookActivity" />
         <activity android:name=".NotebookDirectoryActivity" />
+        <activity android:name=".WordDetailActivity" />
     </application>
 
 </manifest>
