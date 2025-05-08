@@ -7,7 +7,7 @@
     <string name="word_result_template">
         單字: %1$s\n
         讀音: %2$s\n
-        アクセント: %3$s\n
+        重音： %3$s\n
         品詞: %4$s\n
         意味: %5$s\n
         例文: %6$s
