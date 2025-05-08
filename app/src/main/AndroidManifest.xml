@@ -25,6 +25,8 @@
         <activity android:name=".WordNotebookActivity" />
         <activity android:name=".NotebookDirectoryActivity" />
         <activity android:name=".WordDetailActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".QuizDirectoryActivity" />
     </application>
 
 </manifest>

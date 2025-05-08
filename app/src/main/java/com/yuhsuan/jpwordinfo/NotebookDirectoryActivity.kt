@@ -54,6 +54,11 @@ class NotebookDirectoryActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_notebook -> true
+                R.id.navigation_quiz -> {
+                    startActivity(Intent(this, QuizDirectoryActivity::class.java))
+                    finish()
+                    true
+                }
                 else -> false
             }
         }

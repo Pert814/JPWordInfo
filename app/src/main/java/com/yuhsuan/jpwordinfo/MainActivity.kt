@@ -42,12 +42,15 @@ class MainActivity : AppCompatActivity() {
         // 設置 BottomNavigationView 監聽器
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_search -> {
-                    // 已經在查詢頁面，不做任何操作
-                    true
-                }
+                R.id.navigation_search -> true
                 R.id.navigation_notebook -> {
                     startActivity(Intent(this, NotebookDirectoryActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.navigation_quiz -> {
+                    startActivity(Intent(this, QuizDirectoryActivity::class.java))
+                    finish()
                     true
                 }
                 else -> false

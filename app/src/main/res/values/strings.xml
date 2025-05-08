@@ -19,9 +19,11 @@
     <string name="search_history_title">最近搜尋紀錄</string>
     <string name="no_history">無搜尋紀錄</string>
     <string name="add_to_notebook">加入單字本</string>
-    <string name="open_notebook">單字本頁面</string>
-    <string name="navigation_search">查詢頁面</string>
+    <string name="navigation_notebook">單字本介面</string>
+    <string name="navigation_search">查詢介面</string>
+    <string name="navigation_quiz">測驗介面</string>
     <string name="notebook_title">單字本標題</string>
+    <string name="quiz_title">選擇測驗單字本</string>
     <string name="no_words">無單字</string>
     <string name="word_added">已加入單字本</string>
     <string name="notebook_directory_title">單字本目錄</string>

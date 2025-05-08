@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/navigation_quiz"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/navigation_quiz" />
+    <item
         android:id="@+id/navigation_search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/navigation_search" />
     <item
         android:id="@+id/navigation_notebook"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="@string/open_notebook" />
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/navigation_notebook" />
 </menu>
