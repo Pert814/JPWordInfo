@@ -94,7 +94,7 @@ class NotebookDirectoryActivity : AppCompatActivity() {
     private fun showNotebookActions(notebook: Notebook) {
         AlertDialog.Builder(this)
             .setTitle(notebook.name)
-            .setItems(arrayOf("編輯", "刪除")) { _, which ->
+            .setItems(arrayOf("重新命名", "刪除")) { _, which ->
                 when (which) {
                     0 -> showEditNotebookDialog(notebook)
                     1 -> {

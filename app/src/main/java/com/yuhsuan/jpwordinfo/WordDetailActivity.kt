@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -22,6 +23,7 @@ class WordDetailActivity : AppCompatActivity() {
     private val gson = Gson()
     private lateinit var word: WordResponse
     private lateinit var notebookName: String
+    private var initialWordJson: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,7 @@ class WordDetailActivity : AppCompatActivity() {
             etPartOfSpeech.setText(word.partOfSpeech ?: "無詞性")
             etMeaning.setText(word.meaning ?: "無意思")
             etExample.setText(word.example ?: "無例句")
+            initialWordJson = gson.toJson(word)
         } else {
             Log.e("WordDetailActivity", "Missing wordJson or notebookName")
             finish()
@@ -61,7 +64,7 @@ class WordDetailActivity : AppCompatActivity() {
         // 返回按鈕點擊事件
         ivBack.setOnClickListener {
             Log.d("WordDetailActivity", "Back button clicked")
-            finish()
+            checkForUnsavedChanges()
         }
 
         // 保存按鈕點擊事件
@@ -82,6 +85,45 @@ class WordDetailActivity : AppCompatActivity() {
 
             // 返回結果
             setResult(Activity.RESULT_OK)
+            finish()
+        }
+    }
+
+    private fun checkForUnsavedChanges() {
+        val currentWord = WordResponse(
+            word = etWord.text.toString().trim(),
+            reading = etReading.text.toString().trim(),
+            accent = etAccent.text.toString().trim(),
+            partOfSpeech = etPartOfSpeech.text.toString().trim(),
+            meaning = etMeaning.text.toString().trim(),
+            example = etExample.text.toString().trim()
+        )
+        val currentWordJson = gson.toJson(currentWord)
+
+        if (initialWordJson != null && currentWordJson != initialWordJson) {
+            // 顯示警示視窗
+            AlertDialog.Builder(this)
+                .setTitle("未保存的更改")
+                .setMessage("您有未保存的更改，是否保存？")
+                .setPositiveButton("保存") { _, _ ->
+                    val updatedWord = WordResponse(
+                        word = etWord.text.toString().trim(),
+                        reading = etReading.text.toString().trim(),
+                        accent = etAccent.text.toString().trim(),
+                        partOfSpeech = etPartOfSpeech.text.toString().trim(),
+                        meaning = etMeaning.text.toString().trim(),
+                        example = etExample.text.toString().trim()
+                    )
+                    updateWordInNotebook(updatedWord)
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+                .setNeutralButton("丟棄") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("取消", null)
+                .show()
+        } else {
             finish()
         }
     }

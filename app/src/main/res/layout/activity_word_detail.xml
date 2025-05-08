@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,7 +10,7 @@
         android:id="@+id/ivBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_arrow_back"
+        android:src="@drawable/ic_arrow_back"
         android:padding="8dp"
         android:contentDescription="返回" />
 
@@ -22,6 +21,7 @@
         android:layout_height="wrap_content"
         android:hint="單字"
         android:textSize="20sp"
+        android:minHeight="48dp"
         android:paddingBottom="8dp" />
 
     <!-- 讀音 -->
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:hint="讀音"
         android:textSize="16sp"
+        android:minHeight="48dp"
         android:paddingBottom="8dp" />
 
     <!-- 重音 -->
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content"
         android:hint="重音"
         android:textSize="14sp"
+        android:minHeight="48dp"
         android:paddingBottom="8dp" />
 
     <!-- 詞性 -->
@@ -49,6 +51,7 @@
         android:layout_height="wrap_content"
         android:hint="詞性"
         android:textSize="14sp"
+        android:minHeight="48dp"
         android:paddingBottom="8dp" />
 
     <!-- 意思 -->
@@ -58,6 +61,7 @@
         android:layout_height="wrap_content"
         android:hint="意思"
         android:textSize="14sp"
+        android:minHeight="48dp"
         android:paddingBottom="8dp" />
 
     <!-- 例句 -->
@@ -67,6 +71,7 @@
         android:layout_height="wrap_content"
         android:hint="例句"
         android:textSize="14sp"
+        android:minHeight="48dp"
         android:paddingBottom="16dp" />
 
     <!-- 保存按鈕 -->

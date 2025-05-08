@@ -5,32 +5,12 @@
     android:padding="8dp">
 
     <!-- 第一行：詞語 + アクセント -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvWord"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:text=" " />
-
-        <TextView
-            android:id="@+id/tvAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#888888"
-            android:textStyle="italic" />
-    </LinearLayout>
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <!-- 第二行：讀音 -->
     <TextView
