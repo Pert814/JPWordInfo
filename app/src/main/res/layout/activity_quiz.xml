@@ -15,15 +15,22 @@
         android:contentDescription="返回" />
 
     <!-- 單字顯示區域 -->
-    <TextView
-        android:id="@+id/tvQuizWord"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="#F5F5F5" />
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tvQuizWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#F5F5F5"
+            android:scrollbars="vertical" />
+
+    </ScrollView>
 
     <!-- 按鈕區域 -->
     <LinearLayout

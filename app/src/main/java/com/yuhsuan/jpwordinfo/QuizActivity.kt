@@ -68,15 +68,16 @@ class QuizActivity : AppCompatActivity() {
         tvQuizWord.text = if (!isShowingAnswer) {
             word.word ?: "無單字"
         } else {
-            val answer = """
-                讀音：${word.reading ?: "無讀音"}
-                重音：${word.accent ?: "無重音"}
-                詞性：${word.partOfSpeech ?: "無詞性"}
-                意思：${word.meaning ?: "無意思"}
-                例句：${word.example ?: "無例句"}
-            """.trimIndent()
-            answer
+            buildString {
+                append("讀音：${word.reading ?: "無讀音"}\n")
+                append("重音：${word.accent ?: "無重音"}\n")
+                append("詞性：${word.partOfSpeech ?: "無詞性"}\n")
+                append("意思：${word.meaning ?: "無意思"}\n")
+                append("例句：${word.example ?: "無例句"}")
+            }
         }
+        // 確保佈局更新
+        tvQuizWord.requestLayout()
     }
 
     private fun toggleAnswer() {
