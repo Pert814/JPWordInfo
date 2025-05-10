@@ -80,6 +80,11 @@ class WordNotebookActivity : AppCompatActivity() {
                         finish()
                         true
                     }
+                    R.id.navigation_quiz -> {
+                        startActivity(Intent(this, QuizDirectoryActivity::class.java))
+                        finish()
+                        true
+                    }
                     else -> false
                 }
             }
@@ -127,6 +132,7 @@ class WordAdapter(
             intent.putExtra("wordJson", gson.toJson(word))
             intent.putExtra("notebookName", notebookName)
             activity.getEditWordLauncher().launch(intent)
+            activity.finish()
         }
     }
 

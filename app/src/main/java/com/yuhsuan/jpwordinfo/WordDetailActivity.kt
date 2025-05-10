@@ -1,13 +1,14 @@
 package com.yuhsuan.jpwordinfo
 
-import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 
@@ -82,10 +83,10 @@ class WordDetailActivity : AppCompatActivity() {
 
             // 更新資料
             updateWordInNotebook(updatedWord)
+            Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
 
-            // 返回結果
-            setResult(Activity.RESULT_OK)
-            finish()
+            // 更新初始狀態以反映保存後的內容
+            initialWordJson = gson.toJson(updatedWord)
         }
     }
 
@@ -115,17 +116,23 @@ class WordDetailActivity : AppCompatActivity() {
                         example = etExample.text.toString().trim()
                     )
                     updateWordInNotebook(updatedWord)
-                    setResult(Activity.RESULT_OK)
-                    finish()
+                    navigateBackToWordNotebook()
                 }
                 .setNeutralButton("丟棄") { _, _ ->
-                    finish()
+                    navigateBackToWordNotebook()
                 }
                 .setNegativeButton("取消", null)
                 .show()
         } else {
-            finish()
+            navigateBackToWordNotebook()
         }
+    }
+
+    private fun navigateBackToWordNotebook() {
+        val intent = Intent(this, WordNotebookActivity::class.java)
+        intent.putExtra("notebookName", notebookName)
+        startActivity(intent)
+        finish()
     }
 
     private fun updateWordInNotebook(updatedWord: WordResponse) {
